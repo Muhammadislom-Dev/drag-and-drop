@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { useRef } from "react";
-import { DocumentIcon, UserIcon } from "../../assets/icons";
-import { PersonImage } from "../../assets/images";
 import { trello } from "../../locales/data";
+import Section from "../Section";
 import { CardPage } from "./style";
 
 function Card() {
   const [boards, setBoards] = useState(trello);
   const [currentBoard, setCurrentBoard] = useState(null);
   const [currentItem, setCurrentItem] = useState(null);
+  console.log(currentBoard);
 
   function dragOverHandler(e) {
     e.preventDefault();
@@ -77,64 +76,22 @@ function Card() {
               onDrop={(e) => dropCardHandler(e, board)}>
               {board.title}
             </div>
-            {board.items.map((item, index) => (
-              <div
-                onDragOver={(e) => dragOverHandler(e)}
-                onDragLeave={(e) => dragLeaveHandler(e)}
-                onDragStart={(e) => dragStartHandler(e, board, item)}
-                onDragEnd={(e) => dragEndHandler(e)}
-                onDrop={(e) => dropHandler(e, board, item)}
-                draggable={true}
-                className="card-box"
-                key={index}>
-                <h4>{item.title}</h4>
-                <p>{item.description}</p>
-              <div className="card-items">
-                <button>{item.status}</button>
-                <div>
-                  <img src={UserIcon} />
-                  <p>{item.number}</p>
-                </div>
-                <div>
-                  <img src={DocumentIcon} />
-                  <p>{item.documents}</p>
-                </div>
-              </div>
-              <div className="card-bottom">
-                <img src={PersonImage} />
-                <span>
-                  <p>{item.job}</p>
-                  <h6>{item.name}</h6>
-                </span>
-              </div>
-              </div>
-            ))}
+            <div className="card-scroll">
+              {board.items.map((item, index) => (
+                <Section
+                  onDragOver={(e) => dragOverHandler(e)}
+                  onDragLeave={(e) => dragLeaveHandler(e)}
+                  onDragStart={(e) => dragStartHandler(e, board, item)}
+                  onDragEnd={(e) => dragEndHandler(e)}
+                  onDrop={(e) => dropHandler(e, board, item)}
+                  item={item}
+                  key={index}
+                />
+              ))}
+            </div>
           </div>
         ))}
       </div>
-
-      {/* {boards.map((board) => (
-        <div className="board">
-          <div
-            onDragOver={(e) => dragOverHandler(e)}
-            onDrop={(e) => dropCardHandler(e, board)}
-            className="board-title">
-            {board.title}
-          </div>
-          {board.items.map((item) => (
-            <div
-              onDragOver={(e) => dragOverHandler(e)}
-              onDragLeave={(e) => dragLeaveHandler(e)}
-              onDragStart={(e) => dragStartHandler(e, board, item)}
-              onDragEnd={(e) => dragEndHandler(e)}
-              onDrop={(e) => dropHandler(e, board, item)}
-              draggable={true}
-              className="item">
-              {item.title}
-            </div>
-          ))}
-        </div>
-      ))} */}
     </CardPage>
   );
 }

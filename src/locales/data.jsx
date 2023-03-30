@@ -120,11 +120,17 @@ export const trello = [
   {
     id: 4,
     title: "Архив",
-    items: [],
-  },
-  {
-    id: 5,
-    title: "Card 5",
-    items: [],
+    items: [
+      {
+        id: 11,
+        title: "Freshers",
+        description: "Finance",
+        name: "Jacob Jones",
+        job: "Рекруитер",
+        number: 2,
+        documents: 255,
+        status: "В приоритете",
+      },
+    ],
   },
 ];
